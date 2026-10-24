@@ -279,7 +279,7 @@
   .cinta-libro {
     position: absolute; left: 22%; bottom: -9%; width: 5.5%; height: 16%;
     transform-origin: 50% 0;
-    background: linear-gradient(90deg, #b96b7c, #eab0bb 40%, #f6ccd3 50%, #d58e9d 65%, #ac5d6f);
+    background: linear-gradient(90deg, #7f1320, #c43a46 40%, #e0727a 50%, #b02a37 65%, #6e0f1b);
     clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 88%, 0 100%);
     animation: mecer 5s ease-in-out infinite;
     z-index: 1;
@@ -604,18 +604,18 @@
       <feGaussianBlur in="d" stdDeviation="0.35"/>
     </filter>
     <radialGradient id="pA" cx=".5" cy=".85" r=".8">
-      <stop offset="0" stop-color="#fbe3e4"/>
-      <stop offset=".6" stop-color="#f2b7bf"/>
-      <stop offset="1" stop-color="#e48e9f"/>
+      <stop offset="0" stop-color="#f6c2c0"/>
+      <stop offset=".6" stop-color="#e05a63"/>
+      <stop offset="1" stop-color="#b3212f"/>
     </radialGradient>
     <radialGradient id="pB" cx=".5" cy=".85" r=".8">
-      <stop offset="0" stop-color="#f6c9cf"/>
-      <stop offset=".65" stop-color="#e99aa8"/>
-      <stop offset="1" stop-color="#d27387"/>
+      <stop offset="0" stop-color="#ec8f92"/>
+      <stop offset=".65" stop-color="#c8333f"/>
+      <stop offset="1" stop-color="#981827"/>
     </radialGradient>
     <radialGradient id="pC" cx=".5" cy=".6" r=".7">
-      <stop offset="0" stop-color="#e48c9d"/>
-      <stop offset="1" stop-color="#c25f76"/>
+      <stop offset="0" stop-color="#c32f3c"/>
+      <stop offset="1" stop-color="#7a101d"/>
     </radialGradient>
     <linearGradient id="gH" x1="0" x2="1">
       <stop offset="0" stop-color="#8fae8b"/>
@@ -626,28 +626,28 @@
     <path id="petalo" d="M0 6 C-22 4 -32 -22 -13 -40 C-5 -46 5 -46 13 -40 C32 -22 22 4 0 6Z"/>
 
     <g id="rosa" filter="url(#acuarela)">
-      <g fill="url(#pA)" fill-opacity=".92" stroke="#d98394" stroke-opacity=".35" stroke-width=".8">
+      <g fill="url(#pA)" fill-opacity=".92" stroke="#b02a37" stroke-opacity=".35" stroke-width=".8">
         <use href="#petalo"/><use href="#petalo" transform="rotate(72)"/><use href="#petalo" transform="rotate(144)"/>
         <use href="#petalo" transform="rotate(216)"/><use href="#petalo" transform="rotate(288)"/>
       </g>
-      <g fill="url(#pA)" fill-opacity=".9" stroke="#d98394" stroke-opacity=".4" stroke-width="1" transform="rotate(36) scale(.8)">
+      <g fill="url(#pA)" fill-opacity=".9" stroke="#b02a37" stroke-opacity=".4" stroke-width="1" transform="rotate(36) scale(.8)">
         <use href="#petalo"/><use href="#petalo" transform="rotate(72)"/><use href="#petalo" transform="rotate(144)"/>
         <use href="#petalo" transform="rotate(216)"/><use href="#petalo" transform="rotate(288)"/>
       </g>
-      <g fill="url(#pB)" fill-opacity=".9" stroke="#c96a7e" stroke-opacity=".35" stroke-width="1.2" transform="rotate(12) scale(.58)">
+      <g fill="url(#pB)" fill-opacity=".9" stroke="#8f1a28" stroke-opacity=".35" stroke-width="1.2" transform="rotate(12) scale(.58)">
         <use href="#petalo"/><use href="#petalo" transform="rotate(90)"/><use href="#petalo" transform="rotate(180)"/><use href="#petalo" transform="rotate(270)"/>
       </g>
       <g fill="url(#pC)" fill-opacity=".9" transform="rotate(55) scale(.36)">
         <use href="#petalo"/><use href="#petalo" transform="rotate(120)"/><use href="#petalo" transform="rotate(240)"/>
       </g>
-      <circle r="6" fill="#c9667c" opacity=".75"/>
-      <path d="M-5 -1 C-5 -8 6 -8 6 -1 C6 5 -2 6 -3 1 C-4 -3 1 -4 1 -1" fill="none" stroke="#9e4a5e" stroke-width="1.2" stroke-linecap="round" opacity=".6"/>
+      <circle r="6" fill="#8e1523" opacity=".8"/>
+      <path d="M-5 -1 C-5 -8 6 -8 6 -1 C6 5 -2 6 -3 1 C-4 -3 1 -4 1 -1" fill="none" stroke="#5e0c17" stroke-width="1.2" stroke-linecap="round" opacity=".6"/>
     </g>
 
     <g id="boton" filter="url(#acuarela)">
       <path d="M0 4 C-7 4 -9 -2 -6 -8 L0 2 L6 -8 C9 -2 7 4 0 4Z" fill="#9db694" opacity=".9"/>
-      <path d="M0 -16 C9 -11 10 2 0 6 C-10 2 -9 -11 0 -16Z" fill="url(#pB)" stroke="#c96a7e" stroke-opacity=".4"/>
-      <path d="M-2 -13 C4 -9 4 0 0 4" fill="none" stroke="#b55a6f" stroke-opacity=".5" stroke-width="1"/>
+      <path d="M0 -16 C9 -11 10 2 0 6 C-10 2 -9 -11 0 -16Z" fill="url(#pB)" stroke="#8f1a28" stroke-opacity=".4"/>
+      <path d="M-2 -13 C4 -9 4 0 0 4" fill="none" stroke="#7a1220" stroke-opacity=".5" stroke-width="1"/>
       <path d="M0 5 C1 14 -1 22 -3 30" fill="none" stroke="#8aa682" stroke-width="1.6" stroke-linecap="round"/>
     </g>
 
@@ -781,6 +781,8 @@
   <p class="intro-linea l3" data-texto="intro2"></p>
   <button class="intro-empezar" type="button"><i></i>toca para empezar</button>
 </div>
+
+<audio id="cancion" preload="auto" loop playsinline></audio>
 
 <button class="sonido" id="sonido" type="button" aria-label="Activar o silenciar el sonido">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -932,6 +934,12 @@ const CONFIG = {
   pieDeFoto: "Harold & Mileidi",
   tituloFoto: "Una página que ya escribimos",
   notaFoto: "Y todavía quedan muchas por llenar.",
+
+  // ← CANCIÓN: pon el archivo de audio junto a este HTML con este nombre.
+  //   Suena al tocar "toca para empezar". Si no está, suena la cajita de música.
+  musica: "cancion.mp3",
+  musicaDesde: 0,        // segundo en el que empieza (ej. 45 para arrancar en el coro)
+  musicaVolumen: 0.8,
 
   // Intro (pantalla oscura del principio)
   intro1: "Hay historias que se leen…",
@@ -1178,6 +1186,24 @@ const CONFIG = {
     requestAnimationFrame(dibujar);
   })();
 
+  // --- canción (archivo de audio) ---
+  const cancion = $("#cancion");
+  if (CONFIG.musica) cancion.src = CONFIG.musica;
+  function sonarCancion() {
+    if (!CONFIG.musica) return Promise.reject();
+    try { if (CONFIG.musicaDesde) cancion.currentTime = CONFIG.musicaDesde; } catch (e) {}
+    cancion.volume = 0;
+    const p = cancion.play();
+    return (p || Promise.resolve()).then(() => {
+      const fin = CONFIG.musicaVolumen ?? 0.8, t0 = performance.now();
+      (function subir(t) {
+        const k = Math.min(1, (t - t0) / 4000);
+        try { cancion.volume = fin * k; } catch (e) {}
+        if (k < 1) requestAnimationFrame(subir);
+      })(t0);
+    });
+  }
+
   // --- sonido: pasar página, campanitas y cajita de música ---
   let ac = null, maestro = null, sonidoOn = true, ruidoBuf = null;
   function iniciarAudio() {
@@ -1187,7 +1213,6 @@ const CONFIG = {
       ruidoBuf = ac.createBuffer(1, ac.sampleRate * 1.2, ac.sampleRate);
       const d = ruidoBuf.getChannelData(0);
       for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
-      musica();
     } catch (e) { ac = null; }
   }
   function sonPagina(tapa) {
@@ -1252,6 +1277,7 @@ const CONFIG = {
     e.stopPropagation();
     sonidoOn = !sonidoOn;
     botonSonido.classList.toggle("mudo", !sonidoOn);
+    cancion.muted = !sonidoOn;
     if (ac) maestro.gain.setTargetAtTime(sonidoOn ? 1 : 0, ac.currentTime, .15);
   });
 
@@ -1260,7 +1286,10 @@ const CONFIG = {
   function empezar() {
     if (empezado) return;
     empezado = true;
+    // la canción se pide dentro del toque para que el celular la deje sonar
+    const promesa = sonarCancion();
     iniciarAudio();
+    promesa.catch(() => { if (ac) musica(); });
     try {
       if (window.DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission === "function") {
         DeviceOrientationEvent.requestPermission().then(p => { if (p === "granted") escucharGiro(); }).catch(() => {});
@@ -1310,10 +1339,10 @@ const CONFIG = {
 
   /* ---- Pétalos de rosa ---- */
   const COLORES = [
-    ["#fbe1e3", "#eea5b1", "#d77689"],
-    ["#f9d3d8", "#e78f9f", "#c9647a"],
-    ["#fdeceb", "#f2bcc3", "#e091a0"],
-    ["#f6c3cb", "#de7f93", "#b9566d"]
+    ["#f2a3a5", "#d23d48", "#9c1726"],
+    ["#ee8f93", "#c42d3a", "#8a1220"],
+    ["#f6b5b5", "#dc4f58", "#a91e2c"],
+    ["#e7777e", "#b5202f", "#760d1a"]
   ];
   const capa = $("#petalos");
 
