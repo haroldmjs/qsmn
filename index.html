@@ -13,7 +13,7 @@
 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
 <style>
   :root {
     --azul: #a9c6de;
@@ -31,6 +31,7 @@
 
     --serif-titulo: "Playfair Display", "Times New Roman", Georgia, serif;
     --serif-texto: "Lora", Georgia, serif;
+    --serif-tapa: "Cormorant Garamond", Garamond, Georgia, serif;
 
     /* Tamaño del libro: se adapta al celular en vertical */
     --w: min(88vw, 400px, calc((100vh - 110px) / 1.55));
@@ -102,9 +103,12 @@
     --d: calc(var(--w) * .11);
     position: relative;
     width: var(--w); height: var(--h);
-    transform-style: preserve-3d;
-    transform: scale(.93) rotateX(-7deg) rotateY(-18deg);
+    transform: scale(.95);
+    transition: transform 1.8s cubic-bezier(.45,.05,.25,1);
   }
+  body.listo .volumen:not(.abierto) { animation: flotar 6s ease-in-out infinite; }
+  @keyframes flotar { 0%,100% { transform: scale(.95) translateY(0); } 50% { transform: scale(.95) translateY(-5px); } }
+  .volumen.abierto { transform: translateX(calc(var(--w) * .05)); }
   .libro {
     position: absolute; inset: 0;
     perspective: 2400px;
@@ -177,7 +181,7 @@
     background: var(--papel-sombra);
     transition: box-shadow 1s ease .8s;
   }
-  .volumen.abierto .canto {
+  .canto {
     box-shadow:
       1px 1px 0 #f6eddc, 2px 2px 0 #d8c9ae, 3px 3px 0 #f3e9d6, 4px 4px 0 #d3c3a7,
       5px 5px 0 #efe4cf, 6px 6px 0 #cbb99b, 7px 7px 0 #8fa9c1,
@@ -234,35 +238,22 @@
     transition-duration: var(--giro-tapa);
     transition-timing-function: cubic-bezier(.6,.02,.25,1);
   }
-  /* cuero azul pastel envejecido */
+  /* cartulina azul pastel con relieve */
   .tela {
     background:
-      radial-gradient(60% 45% at 56% 48%, rgba(255,255,255,.28), transparent 70%),
-      radial-gradient(30% 22% at 30% 30%, rgba(225,238,248,.35), transparent 70%),
-      radial-gradient(26% 18% at 74% 70%, rgba(90,125,160,.20), transparent 70%),
-      radial-gradient(22% 16% at 40% 78%, rgba(225,238,248,.30), transparent 70%),
-      radial-gradient(18% 14% at 78% 26%, rgba(90,125,160,.18), transparent 70%),
-      radial-gradient(120% 100% at 55% 50%, transparent 55%, rgba(55,90,125,.35) 100%),
-      #a2c2dc;
-    box-shadow: inset 0 0 0 1px rgba(50,80,115,.35), inset 0 0 30px rgba(45,75,110,.4);
+      radial-gradient(110% 80% at 35% 25%, rgba(255,255,255,.22), transparent 60%),
+      radial-gradient(120% 100% at 60% 70%, transparent 60%, rgba(70,100,135,.14) 100%),
+      #b9cee2;
+    box-shadow: inset 0 0 0 1px rgba(70,100,135,.22), inset 0 0 22px rgba(70,100,135,.16);
   }
   .tela::before {
     content: ""; position: absolute; inset: 0; pointer-events: none;
-    background-image: var(--ruido); opacity: .55; mix-blend-mode: multiply;
-  }
-  .tela .moteado {
-    position: absolute; inset: 0; pointer-events: none;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='620' viewBox='0 0 400 620' preserveAspectRatio='none'><filter id='m'><feTurbulence type='fractalNoise' baseFrequency='.011 .008' numOctaves='4' seed='11'/><feColorMatrix values='0 0 0 0 .16  0 0 0 0 .28  0 0 0 0 .42  0 0 0 1.5 -.55'/></filter><rect width='100%' height='100%' filter='url(%23m)'/></svg>"),
-      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='g'><feTurbulence type='turbulence' baseFrequency='.35' numOctaves='2' seed='4'/><feColorMatrix values='0 0 0 0 .2  0 0 0 0 .32  0 0 0 0 .45  0 0 0 .9 -.25'/></filter><rect width='100%' height='100%' filter='url(%23g)'/></svg>");
-    background-size: 100% 100%, 180px 180px;
-    opacity: .55; mix-blend-mode: multiply;
+    background-image: var(--ruido); opacity: .28; mix-blend-mode: multiply;
   }
   /* lomo y bisagra */
   .tapa .frente .lomo {
-    position: absolute; top: 0; bottom: 0; left: 0; width: 10.5%;
-    background: linear-gradient(90deg,
-      rgba(35,65,100,.38) 0%, rgba(255,255,255,.10) 30%, rgba(35,65,100,.16) 60%,
-      rgba(35,65,100,.42) 88%, rgba(255,255,255,.22) 94%, rgba(35,65,100,.10) 100%);
+    position: absolute; top: 0; bottom: 0; left: 0; width: 3.5%;
+    background: linear-gradient(90deg, rgba(60,90,125,.22), rgba(255,255,255,.18) 55%, rgba(60,90,125,.16) 80%, transparent);
   }
   .tapa .adornos { position: absolute; inset: 0; width: 100%; height: 100%; }
   .tapa .brillo {
@@ -292,28 +283,34 @@
     filter: drop-shadow(0 .8px .4px rgba(25,45,75,.55)) drop-shadow(0 -.5px 0 rgba(255,255,255,.35));
   }
   .portada {
-    position: absolute; top: 15%; bottom: 25%; left: 17.5%; right: 6.25%;
+    position: absolute; top: 17%; bottom: 17%; left: 16%; right: 16%;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    text-align: center; padding: 0 9%;
+    text-align: center; font-family: var(--serif-tapa); color: #27313d;
   }
-  .portada .monograma {
-    position: absolute; top: 2%;
-    font-family: var(--serif-titulo); font-size: calc(var(--w) * .034);
-    letter-spacing: .34em; text-transform: uppercase;
+  .portada .cap {
+    font-weight: 600; text-transform: uppercase; letter-spacing: .26em;
+    font-size: calc(var(--w) * .062); line-height: 1.1; margin-right: -.26em;
   }
-  .portada h1 {
-    font-family: var(--serif-titulo); font-style: italic; font-weight: 500;
-    font-size: calc(var(--w) * .1); line-height: 1.08;
+  .portada .ital {
+    font-style: italic; font-weight: 500; font-size: calc(var(--w) * .062);
+    margin: .55em 0 .9em;
   }
-  .portada .sub {
-    font-family: var(--serif-titulo); font-style: italic;
-    font-size: calc(var(--w) * .056); line-height: 1.3; margin-top: .2em;
+  .portada .nombre {
+    font-weight: 600; text-transform: uppercase; letter-spacing: .22em;
+    font-size: calc(var(--w) * .066); line-height: 1.15; margin-right: -.22em;
   }
-  .portada .onda { width: 32%; margin: calc(var(--w) * .035) 0; color: #2b4562; opacity: .75; }
-  .tinta-tapa {
-    color: #2b4562;
-    text-shadow: 0 1px 0 rgba(255,255,255,.4), 0 -1px 0 rgba(20,40,65,.18);
+  .portada .y {
+    font-style: italic; text-transform: uppercase; letter-spacing: .3em;
+    font-size: calc(var(--w) * .03); margin: .45em 0 .4em; margin-right: -.3em;
   }
+  .portada .caja {
+    margin-top: 1.2em; padding: .9em 0;
+    width: 86%;
+    border-top: 1px solid rgba(39,49,61,.45); border-bottom: 1px solid rgba(39,49,61,.45);
+    font-style: italic; text-transform: uppercase; letter-spacing: .24em;
+    font-size: calc(var(--w) * .031); line-height: 1.7; margin-right: -.24em;
+  }
+  .tinta-tapa { text-shadow: 0 1px 0 rgba(255,255,255,.35); }
   /* guarda (interior de la tapa) */
   .guarda {
     background:
@@ -386,8 +383,13 @@
   /* poema */
   .poema { font-style: italic; }
   .pag-poema .contenido { padding-left: 10%; padding-right: 7%; }
-  #poema-2 { justify-content: center; }
-  #poema-2 .ilustra { width: 92%; max-height: 26%; margin-bottom: 1.4em; }
+  #poema-2 .ilustra { width: 92%; max-height: 26%; margin-top: 1.2em; }
+  .explicacion { justify-content: center; text-align: center; }
+  .explicacion .antetitulo { margin-top: -1em; }
+  .texto-explica .verso { padding-left: 0; text-indent: 0; font-size: 1.12em; line-height: 1.6; margin-bottom: .9em; }
+  .explicacion .ilustra { width: 62%; margin-top: .6em; }
+  .explicacion .ilustra .tinta { transition-delay: 2.6s; }
+  .explicacion .firma { margin-top: .4em; text-align: right; }
   #poema-3 .versos { margin-top: 1.2em; }
   .poema .versos { margin: .2em 0 .4em; }
   .verso {
@@ -567,39 +569,48 @@
   /* intro */
   .intro {
     position: fixed; inset: 0; z-index: 80;
-    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
     padding: 24px; text-align: center;
-    background: radial-gradient(90% 70% at 50% 45%, #2b2019 0%, #160f0b 75%);
-    color: #efe2cc; cursor: pointer;
-    transition: opacity 1.6s ease, visibility 0s linear 1.6s;
+    background: radial-gradient(95% 70% at 50% 42%, #e3edf6 0%, #c3d6e8 55%, #a4bed6 100%);
+    color: #2a3c52; cursor: pointer;
+    transition: opacity 1.4s ease, visibility 0s linear 1.4s;
+    will-change: opacity;
   }
   .intro::before {
     content: ""; position: absolute; inset: 0; pointer-events: none;
-    background-image: var(--ruido); opacity: .25; mix-blend-mode: screen;
+    background-image: var(--ruido); opacity: .18; mix-blend-mode: multiply;
   }
   .intro.fuera { opacity: 0; visibility: hidden; }
   .intro-linea {
-    font-family: var(--serif-titulo); font-style: italic; font-size: 22px; line-height: 1.4;
-    opacity: 0; transform: translateY(8px); filter: blur(4px);
-    animation: linea 1.6s cubic-bezier(.2,.7,.2,1) forwards;
+    font-family: var(--serif-titulo); font-style: italic; font-size: 23px; line-height: 1.4;
+    opacity: 0; transform: translate3d(0, 10px, 0);
+    will-change: opacity, transform;
   }
-  .intro-linea.l1 { font-style: normal; text-transform: uppercase; letter-spacing: .35em; font-size: 12px; color: #c9a86a; animation-delay: .6s; }
-  .intro-linea.l2 { animation-delay: 2s; }
-  .intro-linea.l3 { animation-delay: 3.6s; }
-  @keyframes linea { to { opacity: 1; transform: none; filter: none; } }
+  .intro.lista .intro-linea { animation: linea 1.4s cubic-bezier(.22,.61,.36,1) forwards; }
+  .intro-linea.l1 { font-style: normal; text-transform: uppercase; letter-spacing: .35em; font-size: 12px; color: #56708d; margin-bottom: 6px; }
+  .intro.lista .l1 { animation-delay: .3s; }
+  .intro.lista .l2 { animation-delay: 1.3s; }
+  .intro.lista .l3 { animation-delay: 2.5s; }
+  @keyframes linea { from { opacity: 0; transform: translate3d(0, 10px, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
   .intro-empezar {
-    margin-top: 26px; background: none; border: 0; color: #efe2cc; cursor: pointer;
+    margin-top: 30px; background: none; border: 0; color: #2a3c52; cursor: pointer;
     font-family: var(--serif-titulo); font-style: italic; font-size: 15px; letter-spacing: .04em;
     display: flex; flex-direction: column; align-items: center; gap: 12px;
-    opacity: 0; animation: linea 1.4s ease 5s forwards;
+    opacity: 0; transform: translate3d(0, 10px, 0); will-change: opacity, transform;
   }
+  .intro.lista .intro-empezar { animation: linea 1.2s cubic-bezier(.22,.61,.36,1) 3.6s forwards; }
   .intro-empezar i {
-    width: 44px; height: 44px; border-radius: 50%;
-    border: 1px solid rgba(239,226,204,.5);
-    box-shadow: 0 0 0 0 rgba(239,226,204,.4);
-    animation: pulso 2.4s ease-out 6s infinite;
+    position: relative; width: 44px; height: 44px; border-radius: 50%;
+    border: 1px solid rgba(42,60,82,.45);
   }
-  @keyframes pulso { 0% { box-shadow: 0 0 0 0 rgba(239,226,204,.35); } 100% { box-shadow: 0 0 0 22px rgba(239,226,204,0); } }
+  .intro-empezar i::after {
+    content: ""; position: absolute; inset: -1px; border-radius: 50%;
+    border: 1px solid rgba(42,60,82,.4);
+    opacity: 0; will-change: transform, opacity;
+  }
+  .intro.lista .intro-empezar i::after { animation: pulso 2.4s cubic-bezier(.22,.61,.36,1) 4.6s infinite; }
+  @keyframes pulso { from { opacity: .8; transform: scale(1); } to { opacity: 0; transform: scale(1.9); } }
+  body:not(.listo) .escena { visibility: hidden; }
   .sonido {
     position: fixed; z-index: 60; top: calc(env(safe-area-inset-top) + 14px); right: 14px;
     width: 38px; height: 38px; border-radius: 50%;
@@ -762,46 +773,73 @@
           <circle cx="0" cy="330" r="4.3"/><circle cx="0" cy="380" r="4.3"/><circle cx="0" cy="430" r="4.3"/><circle cx="0" cy="480" r="4.3"/>
           <path d="M0 140 V170 M0 190 V220 M0 240 V270 M0 290 V320 M0 340 V370 M0 390 V420 M0 440 V470" stroke="url(#oroG)" stroke-width="1.7" stroke-dasharray="0 5" stroke-linecap="round"/>
         </g>
+    <!-- ===== Tapa: adornos en relieve (estilo tarjeta gofrada) ===== -->
+    <g id="flor-relieve">
+      <path d="M0 0 C-5 -4 -5 -11 0 -13 C5 -11 5 -4 0 0 Z"/>
+      <path d="M0 0 C-5 -4 -5 -11 0 -13 C5 -11 5 -4 0 0 Z" transform="rotate(72)"/>
+      <path d="M0 0 C-5 -4 -5 -11 0 -13 C5 -11 5 -4 0 0 Z" transform="rotate(144)"/>
+      <path d="M0 0 C-5 -4 -5 -11 0 -13 C5 -11 5 -4 0 0 Z" transform="rotate(216)"/>
+      <path d="M0 0 C-5 -4 -5 -11 0 -13 C5 -11 5 -4 0 0 Z" transform="rotate(288)"/>
+      <circle r="2.6"/>
+    </g>
+    <g id="hoja-relieve"><path d="M0 0 C5 -6 14 -6 20 0 C14 6 5 6 0 0 Z M2 0 H17"/></g>
+    <g id="ramillete-relieve">
+      <path d="M18 62 C30 52 40 44 52 30 M40 44 C46 46 54 46 62 42 M30 52 C28 60 30 66 34 72"/>
+      <use href="#hoja-relieve" transform="translate(14,64) rotate(-150) scale(.9)"/>
+      <use href="#hoja-relieve" transform="translate(62,42) rotate(-10) scale(.8)"/>
+      <use href="#hoja-relieve" transform="translate(34,72) rotate(80) scale(.75)"/>
+      <use href="#hoja-relieve" transform="translate(56,22) rotate(-70) scale(.7)"/>
+      <use href="#flor-relieve" transform="translate(40,34) scale(1.35)"/>
+      <use href="#flor-relieve" transform="translate(60,52) rotate(20) scale(.9)"/>
+      <use href="#flor-relieve" transform="translate(22,44) rotate(-15) scale(.75)"/>
+      <circle cx="66" cy="28" r="1.6"/><circle cx="12" cy="40" r="1.4"/>
+    </g>
+    <g id="esquina-marco">
+      <path d="M44 205 V176 C44 160 56 152 70 152 C80 152 86 160 82 168 C78 174 70 172 70 166"/>
+      <path d="M88 150 C88 104 98 70 138 70 H200"/>
+      <path d="M88 150 C88 162 80 168 72 164"/>
+      <circle cx="86" cy="152" r="4"/>
+    </g>
+    <g id="cuentas-h">
+      <circle cx="172" cy="0" r="2.6"/><circle cx="179" cy="0" r="2.6"/><circle cx="186" cy="0" r="2.6"/>
+      <circle cx="193" cy="0" r="2.6"/><circle cx="200" cy="0" r="2.6"/><circle cx="207" cy="0" r="2.6"/>
+      <circle cx="214" cy="0" r="2.6"/><circle cx="221" cy="0" r="2.6"/><circle cx="228" cy="0" r="2.6"/>
+    </g>
+    <g id="cuentas-v">
+      <circle cx="0" cy="274" r="2.6"/><circle cx="0" cy="282" r="2.6"/><circle cx="0" cy="290" r="2.6"/>
+      <circle cx="0" cy="298" r="2.6"/><circle cx="0" cy="306" r="2.6"/><circle cx="0" cy="314" r="2.6"/>
+      <circle cx="0" cy="322" r="2.6"/><circle cx="0" cy="330" r="2.6"/><circle cx="0" cy="338" r="2.6"/><circle cx="0" cy="346" r="2.6"/>
+    </g>
+    <g id="relieve-tapa" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <!-- marcos rectos con huecos para las cuentas -->
+      <path stroke-width="2.2" d="M165 14 H14 V268 M14 352 V606 H165 M235 606 H386 V352 M386 268 V14 H235"/>
+      <path stroke-width="1.2" d="M168 24 H24 V270 M24 350 V596 H168 M232 596 H376 V350 M376 270 V24 H232"/>
+      <g stroke-width="1.4">
+        <use href="#cuentas-h" transform="translate(0,19)"/>
+        <use href="#cuentas-h" transform="translate(0,601)"/>
+        <use href="#cuentas-v" transform="translate(19,0)"/>
+        <use href="#cuentas-v" transform="translate(381,0)"/>
+      </g>
+      <!-- cartela central con volutas -->
+      <g stroke-width="2.6">
+        <use href="#esquina-marco"/>
+        <use href="#esquina-marco" transform="translate(400,0) scale(-1,1)"/>
+        <use href="#esquina-marco" transform="translate(0,620) scale(1,-1)"/>
+        <use href="#esquina-marco" transform="translate(400,620) scale(-1,-1)"/>
+        <path d="M44 205 V415 M356 205 V415"/>
+      </g>
+      <!-- flores en las esquinas -->
+      <g stroke-width="1.3">
+        <use href="#ramillete-relieve" transform="translate(30,30)"/>
+        <use href="#ramillete-relieve" transform="translate(370,30) scale(-1,1)"/>
+        <use href="#ramillete-relieve" transform="translate(30,590) scale(1,-1)"/>
+        <use href="#ramillete-relieve" transform="translate(370,590) scale(-1,-1)"/>
+      </g>
+    </g>
     <symbol id="tapa-adornos" viewBox="0 0 400 620">
-      <!-- bandas doradas del lomo -->
-      <g stroke="url(#oroG)" stroke-width="1.6" filter="url(#dorado)" fill="url(#oroG)">
-        <path d="M4 70 H38 M4 75 H38 M4 214 H38 M4 219 H38 M4 401 H38 M4 406 H38 M4 545 H38 M4 550 H38"/>
-        <g stroke-width=".8">
-          <path d="M21 120 l5 12 l-5 12 l-5 -12 Z"/><path d="M21 290 l5 12 l-5 12 l-5 -12 Z"/><path d="M21 466 l5 12 l-5 12 l-5 -12 Z"/>
-        </g>
-        <circle cx="21" cy="160" r="1.6"/><circle cx="21" cy="176" r="1.6"/><circle cx="21" cy="330" r="1.6"/><circle cx="21" cy="346" r="1.6"/><circle cx="21" cy="506" r="1.6"/>
-      </g>
-
-      <!-- panel octogonal grabado: luz + sombra -->
-      <g fill="none" stroke-linejoin="round">
-        <path d="M125 31 H320 L376 86 V534 L320 590 H125 L71 534 V86 Z" stroke="rgba(255,255,255,.35)" stroke-width="2" transform="translate(.9,1.1)"/>
-        <path d="M125 31 H320 L376 86 V534 L320 590 H125 L71 534 V86 Z" stroke="rgba(35,65,100,.55)" stroke-width="2"/>
-        <path d="M129 40 H316 L367 90 V530 L316 581 H129 L80 530 V90 Z" stroke="rgba(35,65,100,.45)" stroke-width="5" stroke-dasharray="1.6 2.6"/>
-        <path d="M134 47 H311 L360 95 V525 L311 574 H134 L87 525 V95 Z" stroke="rgba(255,255,255,.22)" stroke-width="1" transform="translate(.6,.8)"/>
-        <path d="M134 47 H311 L360 95 V525 L311 574 H134 L87 525 V95 Z" stroke="rgba(35,65,100,.40)" stroke-width="1"/>
-      </g>
-
-      <!-- gofrado arriba y abajo -->
-      <g transform="translate(223,96) scale(1.15)">
-        <use href="#gofrado" fill="rgba(255,255,255,.4)" color="rgba(255,255,255,.4)" transform="translate(0,1)"/>
-        <use href="#gofrado" fill="rgba(45,78,115,.45)" color="rgba(45,78,115,.45)"/>
-      </g>
-      <g transform="translate(223,526) scale(1.15,-1.15)">
-        <use href="#gofrado" fill="rgba(255,255,255,.4)" color="rgba(255,255,255,.4)" transform="translate(0,-1)"/>
-        <use href="#gofrado" fill="rgba(45,78,115,.45)" color="rgba(45,78,115,.45)"/>
-      </g>
-
-      <!-- cuentas doradas a los lados -->
-      <g fill="url(#oroG)" filter="url(#dorado)" stroke="rgba(70,45,10,.45)" stroke-width=".4">
-        <use href="#cuentas" transform="translate(56,0)"/>
-        <use href="#cuentas" transform="translate(389,0)"/>
-      </g>
-
-      <!-- esquinas de filigrana -->
-      <use href="#esquina" transform="translate(48,5)"/>
-      <use href="#esquina" transform="translate(397,5) scale(-1,1)"/>
-      <use href="#esquina" transform="translate(48,615) scale(1,-1)"/>
-      <use href="#esquina" transform="translate(397,615) scale(-1,-1)"/>
+      <use href="#relieve-tapa" stroke="rgba(255,255,255,.75)" transform="translate(-.9,-.9)"/>
+      <use href="#relieve-tapa" stroke="rgba(66,98,134,.5)" transform="translate(.9,.9)"/>
+      <use href="#relieve-tapa" stroke="#bfd3e6"/>
     </symbol>
     <symbol id="onda" viewBox="0 0 120 16">
       <path d="M4 9 C22 -1 38 -1 60 8 C82 17 98 17 116 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
@@ -927,6 +965,10 @@
     <div class="hoja pag-poema" data-i="2">
       <div class="cara frente papel">
         <div class="contenido poema" id="poema-2">
+          <p class="antetitulo">Para ti, <span data-texto="ella"></span></p>
+          <h2 class="titulo-pagina" data-texto="poemaTitulo"></h2>
+          <svg class="onda" viewBox="0 0 120 16"><use href="#onda"/></svg>
+          <div class="versos"></div>
           <svg class="ilustra" viewBox="0 0 220 90" aria-hidden="true">
             <g fill="none" stroke="#b08a45" stroke-width="1.7" stroke-linecap="round">
               <path class="trazo" pathLength="1" d="M12 62 C48 8 80 82 110 45 C128 24 148 30 166 45"/>
@@ -938,44 +980,32 @@
               <use href="#rosa" transform="translate(194,45) scale(.24)"/>
             </g>
           </svg>
-          <div class="versos"></div>
         </div>
         <div class="folio">— 2 —</div>
       </div>
       <div class="cara reverso papel"></div>
     </div>
 
-    <!-- Hoja 1: el poema (inicio) + la planta con la luz escondida -->
+    <!-- Hoja 1: explicación antes del soneto -->
     <div class="hoja pag-poema" data-i="1">
       <div class="cara frente papel">
-        <div class="contenido poema" id="poema-1">
-          <p class="antetitulo">Para ti, <span data-texto="ella"></span></p>
-          <h2 class="titulo-pagina" data-texto="poemaTitulo"></h2>
+        <div class="contenido poema explicacion">
+          <p class="antetitulo">Antes de empezar</p>
           <svg class="onda" viewBox="0 0 120 16"><use href="#onda"/></svg>
-          <div class="versos"></div>
-          <svg class="ilustra" viewBox="0 0 200 150" aria-hidden="true">
-            <defs>
-              <radialGradient id="luzG">
-                <stop offset="0" stop-color="#fff3c8" stop-opacity="1"/>
-                <stop offset=".45" stop-color="#f3c66a" stop-opacity=".55"/>
-                <stop offset="1" stop-color="#f3c66a" stop-opacity="0"/>
-              </radialGradient>
-            </defs>
-            <circle class="luz aparece" cx="100" cy="46" r="34" fill="url(#luzG)"/>
-            <path class="trazo" pathLength="1" d="M28 141 C70 136 130 136 172 141" fill="none" stroke="#8a6a48" stroke-width="1.4" stroke-linecap="round" opacity=".6"/>
-            <path class="trazo" pathLength="1" d="M100 140 C97 116 104 94 100 60" fill="none" stroke="#7d9b78" stroke-width="2.4" stroke-linecap="round"/>
-            <g class="aparece">
-              <use href="#hoja" transform="translate(100,116) rotate(-150) scale(.75)"/>
-              <use href="#hoja" transform="translate(101,98) rotate(-28) scale(.7)"/>
-              <use href="#boton" transform="translate(100,48) scale(1.7)"/>
+          <div class="versos texto-explica">
+            <span class="verso" style="--i:0" data-texto="explicacion1"></span>
+            <span class="verso" style="--i:1" data-texto="explicacion2"></span>
+          </div>
+          <svg class="ilustra" viewBox="0 0 200 120" aria-hidden="true">
+            <g fill="none" stroke="#b08a45" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path class="trazo" pathLength="1" d="M152 12 C118 16 86 46 66 86 C96 72 132 48 152 12 Z"/>
+              <path class="trazo" pathLength="1" d="M140 24 L130 36 M130 32 L116 48 M118 42 L102 60 M106 54 L90 72"/>
+              <path class="trazo" pathLength="1" d="M152 12 L56 100"/>
             </g>
-            <g fill="none" stroke="#c9a253" stroke-width="1.3" stroke-linecap="round" stroke-dasharray="0.5 4">
-              <path class="aroma" d="M78 138 C73 128 83 122 78 110"/>
-              <path class="aroma" style="animation-delay:1.2s" d="M124 138 C119 128 129 122 124 110"/>
-              <path class="aroma" style="animation-delay:2.4s" d="M62 140 C58 132 66 127 62 118"/>
-              <path class="aroma" style="animation-delay:.6s" d="M140 140 C136 132 144 127 140 118"/>
-            </g>
+            <path class="trazo tinta" pathLength="1" d="M56 100 C72 108 86 96 100 102 C116 108 128 98 150 104" fill="none" stroke="#4b3a2e" stroke-width="1.6" stroke-linecap="round"/>
+            <circle class="aparece" cx="156" cy="104" r="2.2" fill="#4b3a2e"/>
           </svg>
+          <p class="firma"><span class="nombre-firma" data-texto="el"></span></p>
         </div>
         <div class="folio">— 1 —<span class="pasar">pasa la página ›</span></div>
       </div>
@@ -985,15 +1015,15 @@
     <!-- Hoja 0: la tapa -->
     <div class="hoja tapa" data-i="0">
       <div class="cara frente tela">
-        <div class="moteado"></div>
-        <div class="bisel"></div>
         <div class="lomo"></div>
         <svg class="adornos" viewBox="0 0 400 620" preserveAspectRatio="none" aria-hidden="true"><use href="#tapa-adornos"/></svg>
-        <div class="brillo"></div>
-        <div class="portada">
-          <h1 class="tinta-tapa" data-texto="tituloPortada"></h1>
-          <svg class="onda" viewBox="0 0 120 16"><use href="#onda"/></svg>
-          <p class="sub tinta-tapa" data-texto="subtituloPortada"></p>
+        <div class="portada tinta-tapa">
+          <h1 class="cap" data-texto="portadaArriba"></h1>
+          <p class="ital" data-texto="portadaCursiva"></p>
+          <p class="nombre" data-texto="el"></p>
+          <p class="y">y</p>
+          <p class="nombre" data-texto="ella"></p>
+          <p class="caja" data-texto="portadaCaja"></p>
         </div>
       </div>
       <div class="cara reverso guarda">
@@ -1002,19 +1032,6 @@
     </div>
   </div>
 
-    <!-- grosor del libro en 3D -->
-    <div class="lado lomo3d">
-      <svg viewBox="0 0 40 620" preserveAspectRatio="none" aria-hidden="true">
-        <g stroke="url(#oroG)" stroke-width="1.8" fill="none">
-          <path d="M0 70 H40 M0 76 H40 M0 214 H40 M0 220 H40 M0 400 H40 M0 406 H40 M0 544 H40 M0 550 H40"/>
-        </g>
-      </svg>
-      <span class="titulo-lomo" data-texto="tituloLomo"></span>
-    </div>
-    <div class="lado canto-sup"></div>
-    <div class="lado canto-inf"></div>
-    <div class="lado contratapa"></div>
-    <div class="lado canto-der"></div>
   </div>
   </div>
 
@@ -1045,26 +1062,25 @@ const CONFIG = {
   musicaDesde: 0,        // segundo en el que empieza (ej. 45 para arrancar en el coro)
   musicaVolumen: 0.8,
 
-  // Intro (pantalla oscura del principio)
-  intro1: "Hay historias que se leen…",
-  intro2: "y otras que se escriben juntos.",
+  // Intro (pantalla del principio)
+  intro1: "Soy malo para las manualidades…",
+  intro2: "así que te hice esto.",
 
   // Portada
   monograma: "H · M",
-  tituloPortada: "La vida es un buen libro,",
-  subtituloPortada: "quiero que la escribas conmigo",
+  portadaArriba: "La vida es",
+  portadaCursiva: "un buen libro,",
+  portadaCaja: "quiero que la escribas conmigo",
   tituloLomo: "Harold & Mileidi",
+
+  // ← Página antes del soneto
+  explicacion1: "No soy bueno escribiendo…",
+  explicacion2: "así que tomé prestada una parte de un poema que leí y que explica bastante bien cómo me siento.",
 
   // ← POEMA: una estrofa por página (cada texto entre comillas es un verso).
   poemaTitulo: "Soneto XVII",
   poemaAutor: "Pablo Neruda",
   poema: [
-    [
-      "Te amo como la planta que no florece y lleva",
-      "dentro de sí, escondida, la luz de aquellas flores,",
-      "y gracias a tu amor vive oscuro en mi cuerpo",
-      "el apretado aroma que ascendió de la tierra."
-    ],
     [
       "Te amo sin saber cómo, ni cuándo, ni de dónde,",
       "te amo directamente sin problemas ni orgullo:",
@@ -1107,7 +1123,7 @@ const CONFIG = {
   document.title = "Para " + CONFIG.ella;
 
   CONFIG.poema.forEach((estrofa, k) => {
-    const caja = $("#poema-" + (k + 1) + " .versos");
+    const caja = $("#poema-" + (k + 2) + " .versos");
     if (!caja) return;
     estrofa.forEach((v, i) => {
       const span = document.createElement("span");
@@ -1229,47 +1245,15 @@ const CONFIG = {
   const intro = $("#intro"), botonSonido = $("#sonido");
   function vibrar(p) { try { navigator.vibrate && navigator.vibrate(p); } catch (e) {} }
 
-  // --- inclinación 3D (giroscopio o dedo) ---
-  const BASE_X = -7, BASE_Y = -18;
-  let objX = 0, objY = 0, curX = 0, curY = 0, vivo = true;
-  function bucle(t) {
-    if (!vivo) return;
-    curX += (objX - curX) * 0.06;
-    curY += (objY - curY) * 0.06;
-    const flota = reducido ? 0 : Math.sin(t / 1500) * 5;
-    const deriva = reducido ? 0 : Math.sin(t / 2300) * 1.5;
-    const ry = BASE_Y + curY + deriva, rx = BASE_X + curX;
-    vol.style.transform = `translateY(${flota}px) scale(.93) rotateX(${rx}deg) rotateY(${ry}deg)`;
-    vol.style.setProperty("--brillo", (62 - ry * 3) + "%");
-    mesa.style.setProperty("--sx", (-ry * 1.4).toFixed(1));
-    requestAnimationFrame(bucle);
-  }
-  requestAnimationFrame(bucle);
-  const lim = (v, a) => Math.max(-a, Math.min(a, v));
-  window.addEventListener("pointermove", e => {
-    if (e.pointerType === "touch" && e.buttons === 0) return;
-    objY = (e.clientX / innerWidth - 0.5) * 22;
-    objX = -(e.clientY / innerHeight - 0.5) * 14;
-  });
-  window.addEventListener("pointerup", e => { if (e.pointerType === "touch") { objX = 0; objY = 0; } });
-  function escucharGiro() {
-    window.addEventListener("deviceorientation", e => {
-      if (e.gamma == null) return;
-      objY = lim(e.gamma, 30) / 30 * 14;
-      objX = -lim(e.beta - 50, 30) / 30 * 9;
-    });
-  }
+  // --- libro de frente: al abrirlo se centra para leer ---
+  const curX = 0, curY = 0;
   function abrirCamara() {
-    vivo = false;
     vol.classList.add("abierto");
-    vol.style.transition = "transform 1.8s cubic-bezier(.45,.05,.25,1)";
-    vol.style.transform = "translateX(calc(var(--w) * .05))";
-    mesa.style.setProperty("--sx", 0);
     document.body.classList.add("leyendo");
   }
 
-  // --- polvo de luz flotando ---
-  (function polvo() {
+  // --- polvo de luz flotando (empieza al tocar "empezar") ---
+  function iniciarPolvo() {
     const c = $("#polvo"), ctx = c.getContext("2d");
     const dpr = Math.min(2, window.devicePixelRatio || 1);
     let W, H;
@@ -1297,7 +1281,7 @@ const CONFIG = {
       requestAnimationFrame(dibujar);
     }
     requestAnimationFrame(dibujar);
-  })();
+  }
 
   // --- canción (archivo de audio) ---
   const cancion = $("#cancion");
@@ -1403,15 +1387,16 @@ const CONFIG = {
     const promesa = sonarCancion();
     iniciarAudio();
     promesa.catch(() => { if (ac) musica(); });
-    try {
-      if (window.DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission === "function") {
-        DeviceOrientationEvent.requestPermission().then(p => { if (p === "granted") escucharGiro(); }).catch(() => {});
-      } else escucharGiro();
-    } catch (e) {}
     intro.classList.add("fuera");
+    iniciarPolvo();
     document.body.classList.add("listo");
   }
   intro.addEventListener("click", empezar);
+  // las animaciones de la intro arrancan cuando las letras ya cargaron (sin saltos)
+  let introLista = false;
+  const arrancarIntro = () => { if (!introLista) { introLista = true; requestAnimationFrame(() => intro.classList.add("lista")); } };
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(arrancarIntro);
+  setTimeout(arrancarIntro, 1500);
 
   /* ---- "Sí, quiero" ---- */
   $("#boton-si").addEventListener("click", e => {
