@@ -46,7 +46,7 @@
   html, body { height: 100%; }
   body {
     background:
-      radial-gradient(130% 90% at 50% 38%, #f3ebdf 0%, #e6d9c7 55%, #d2c0a8 100%);
+      radial-gradient(85% 60% at 50% 44%, #f4ead9 0%, #e2d1b7 38%, #a88e72 78%, #6d5643 100%);
     color: var(--tinta);
     font-family: var(--serif-texto);
     overflow: hidden;
@@ -65,30 +65,46 @@
     --ruido: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .35  0 0 0 0 .27  0 0 0 0 .18  0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
   }
 
+  #polvo { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+  .vineta {
+    position: fixed; inset: 0; pointer-events: none; z-index: 1;
+    background: radial-gradient(75% 55% at 50% 46%, transparent 40%, rgba(45,30,18,.45) 100%);
+    transition: opacity 2s ease; opacity: .7;
+  }
+  body.leyendo .vineta { opacity: 1; }
   .escena {
+    z-index: 2;
     position: fixed; inset: 0;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 22px;
+    gap: 34px;
     padding: env(safe-area-inset-top) 16px env(safe-area-inset-bottom);
   }
 
   /* ---------- LIBRO ---------- */
   /* el libro como objeto 3D: cerrado se ve inclinado, al abrirlo se endereza */
   .mesa {
-    perspective: 1300px;
-    opacity: 0; transform: translateY(14px);
-    animation: llegar 1.4s cubic-bezier(.2,.7,.2,1) .2s forwards;
+    position: relative;
+    perspective: 1100px;
+    perspective-origin: 50% -10%;
+    opacity: 0; transform: translateY(30px) scale(.96);
   }
+  body.listo .mesa { animation: llegar 2s cubic-bezier(.2,.7,.2,1) .4s forwards; }
   @keyframes llegar { to { opacity: 1; transform: none; } }
+  /* sombra que proyecta el libro sobre la mesa */
+  .mesa::before {
+    content: ""; position: absolute; left: 6%; right: -4%; top: 6%; bottom: -3%;
+    background: rgba(45,28,14,.55); border-radius: 6px;
+    filter: blur(22px);
+    transform: translate(calc(var(--sx, 0) * 1px + 14px), 20px);
+    transition: opacity 1.5s ease;
+  }
   .volumen {
     --d: calc(var(--w) * .11);
     position: relative;
     width: var(--w); height: var(--h);
     transform-style: preserve-3d;
-    transform: translateX(calc(var(--w) * .04)) rotateX(-6deg) rotateY(32deg);
-    transition: transform 1.6s cubic-bezier(.45,.05,.25,1);
+    transform: scale(.93) rotateX(-7deg) rotateY(-18deg);
   }
-  .volumen.abierto { transform: translateX(calc(var(--w) * .05)); }
   .libro {
     position: absolute; inset: 0;
     perspective: 2400px;
@@ -120,21 +136,32 @@
     text-shadow: 0 1px 0 rgba(255,255,255,.3);
   }
   .canto-sup, .canto-inf {
-    left: 2px; width: calc(var(--w) + 2px); height: var(--d);
+    left: 0; width: calc(var(--w) + 5px); height: var(--d);
     background:
-      linear-gradient(0deg, #8fb0cc 0 6%, transparent 6% 94%, #8fb0cc 94%),
-      repeating-linear-gradient(0deg, #f4ead8 0 1px, #e2d4bb 1px 2px),
+      linear-gradient(0deg, #8aabc8 0 7%, rgba(40,25,10,.25) 7% 9%, transparent 9% 91%, rgba(40,25,10,.2) 91% 93%, #7d9dba 93%),
+      linear-gradient(90deg, rgba(60,40,20,.25), transparent 8%, transparent 92%, rgba(60,40,20,.2)),
+      repeating-linear-gradient(0deg, #f5ecdb 0 1px, #e4d6be 1px 2px, #efe5d1 2px 3px),
       var(--papel);
   }
-  .canto-sup { top: calc(-1 * var(--d)); transform-origin: bottom center; transform: rotateX(90deg); }
-  .canto-inf { top: 100%; transform-origin: top center; transform: rotateX(-90deg); }
+  .canto-sup, .canto-inf { -webkit-backface-visibility: visible; backface-visibility: visible; }
+  .canto-sup { top: calc(-4px - var(--d)); transform-origin: bottom center; transform: rotateX(90deg); }
+  .canto-inf { top: calc(100% + 4px); transform-origin: top center; transform: rotateX(-90deg); }
   .canto-der {
-    left: calc(100% + 1px); top: 1px; width: var(--d); height: calc(var(--h) - 2px);
+    left: calc(100% + 5px); top: -4px; width: var(--d); height: calc(var(--h) + 8px);
     transform-origin: left center; transform: rotateY(90deg);
+    border-radius: 0 3px 3px 0;
     background:
-      linear-gradient(90deg, #8fb0cc 0 6%, transparent 6% 94%, #8fb0cc 94%),
-      repeating-linear-gradient(90deg, #f4ead8 0 1px, #e2d4bb 1px 2px),
+      linear-gradient(90deg, #8aabc8 0 7%, rgba(40,25,10,.25) 7% 9%, transparent 9% 91%, rgba(40,25,10,.2) 91% 93%, #7d9dba 93%),
+      linear-gradient(180deg, rgba(60,40,20,.25), transparent 5%, transparent 95%, rgba(60,40,20,.25)),
+      repeating-linear-gradient(90deg, #f5ecdb 0 1px, #e4d6be 1px 2px, #efe5d1 2px 3px),
       var(--papel);
+  }
+  .contratapa {
+    left: 0; top: -4px; width: calc(100% + 5px); height: calc(100% + 8px);
+    transform: translateZ(calc(-1 * var(--d)));
+    border-radius: 3px 8px 8px 3px;
+    background: linear-gradient(90deg, #87a8c4, #9cbcd6 60%, #7d9dba);
+    box-shadow: inset -2px 0 3px rgba(30,55,85,.4);
   }
 
   /* sombra de contacto sobre la mesa */
@@ -148,6 +175,9 @@
   .canto {
     position: absolute; inset: 0; border-radius: 2px 4px 4px 2px;
     background: var(--papel-sombra);
+    transition: box-shadow 1s ease .8s;
+  }
+  .volumen.abierto .canto {
     box-shadow:
       1px 1px 0 #f6eddc, 2px 2px 0 #d8c9ae, 3px 3px 0 #f3e9d6, 4px 4px 0 #d3c3a7,
       5px 5px 0 #efe4cf, 6px 6px 0 #cbb99b, 7px 7px 0 #8fa9c1,
@@ -214,7 +244,7 @@
       radial-gradient(18% 14% at 78% 26%, rgba(90,125,160,.18), transparent 70%),
       radial-gradient(120% 100% at 55% 50%, transparent 55%, rgba(55,90,125,.35) 100%),
       #a2c2dc;
-    box-shadow: inset 0 0 0 1px rgba(50,80,115,.35), inset 0 0 26px rgba(45,75,110,.35);
+    box-shadow: inset 0 0 0 1px rgba(50,80,115,.35), inset 0 0 30px rgba(45,75,110,.4);
   }
   .tela::before {
     content: ""; position: absolute; inset: 0; pointer-events: none;
@@ -235,6 +265,26 @@
       rgba(35,65,100,.42) 88%, rgba(255,255,255,.22) 94%, rgba(35,65,100,.10) 100%);
   }
   .tapa .adornos { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .tapa .brillo {
+    position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(108deg, transparent 38%, rgba(255,255,255,.55) 50%, transparent 62%);
+    background-size: 320% 100%;
+    background-position: var(--brillo, 60%) 0;
+    mix-blend-mode: soft-light;
+  }
+  .tapa .bisel {
+    position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
+    box-shadow: inset 2px 2px 2px rgba(255,255,255,.28), inset -3px -3px 4px rgba(25,50,80,.35);
+  }
+  .cinta-libro {
+    position: absolute; left: 22%; bottom: -9%; width: 5.5%; height: 16%;
+    transform-origin: 50% 0;
+    background: linear-gradient(90deg, #b96b7c, #eab0bb 40%, #f6ccd3 50%, #d58e9d 65%, #ac5d6f);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 88%, 0 100%);
+    animation: mecer 5s ease-in-out infinite;
+    z-index: 1;
+  }
+  @keyframes mecer { 0%,100% { transform: rotate(1.5deg); } 50% { transform: rotate(-2deg); } }
   .oro {
     background: linear-gradient(100deg, #94672a 0%, #e5c477 20%, #fff0c4 30%, #c8973f 46%, #8d6424 60%, #e0bd6c 80%, #a47732 100%);
     -webkit-background-clip: text; background-clip: text;
@@ -463,18 +513,70 @@
 
   /* pista inicial */
   .pista {
-    font-family: var(--serif-titulo); font-style: italic; color: var(--tinta-suave);
+    font-family: var(--serif-titulo); font-style: italic; color: #f6ecdc;
+    text-shadow: 0 1px 6px rgba(40,25,10,.6);
     font-size: 15px; letter-spacing: .02em;
-    opacity: 0; animation: aparecer 1.2s ease 1.8s forwards;
+    opacity: 0;
     transition: opacity .6s ease;
     display: flex; align-items: center; gap: 10px;
     min-height: 22px;
   }
   .pista::before, .pista::after { content: ""; width: 22px; height: 1px; background: currentColor; opacity: .5; }
+  body.listo .pista { animation: aparecer 1.2s ease 2.8s forwards; }
   .pista.oculta { opacity: 0 !important; animation: none; }
   @keyframes aparecer { to { opacity: .85; } }
   .pista span { animation: respirar 2.8s ease-in-out 3s infinite; }
   @keyframes respirar { 0%,100% { opacity: 1; } 50% { opacity: .45; } }
+
+  /* intro */
+  .intro {
+    position: fixed; inset: 0; z-index: 80;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
+    padding: 24px; text-align: center;
+    background: radial-gradient(90% 70% at 50% 45%, #2b2019 0%, #160f0b 75%);
+    color: #efe2cc; cursor: pointer;
+    transition: opacity 1.6s ease, visibility 0s linear 1.6s;
+  }
+  .intro::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image: var(--ruido); opacity: .25; mix-blend-mode: screen;
+  }
+  .intro.fuera { opacity: 0; visibility: hidden; }
+  .intro-linea {
+    font-family: var(--serif-titulo); font-style: italic; font-size: 22px; line-height: 1.4;
+    opacity: 0; transform: translateY(8px); filter: blur(4px);
+    animation: linea 1.6s cubic-bezier(.2,.7,.2,1) forwards;
+  }
+  .intro-linea.l1 { font-style: normal; text-transform: uppercase; letter-spacing: .35em; font-size: 12px; color: #c9a86a; animation-delay: .6s; }
+  .intro-linea.l2 { animation-delay: 2s; }
+  .intro-linea.l3 { animation-delay: 3.6s; }
+  @keyframes linea { to { opacity: 1; transform: none; filter: none; } }
+  .intro-empezar {
+    margin-top: 26px; background: none; border: 0; color: #efe2cc; cursor: pointer;
+    font-family: var(--serif-titulo); font-style: italic; font-size: 15px; letter-spacing: .04em;
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+    opacity: 0; animation: linea 1.4s ease 5s forwards;
+  }
+  .intro-empezar i {
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1px solid rgba(239,226,204,.5);
+    box-shadow: 0 0 0 0 rgba(239,226,204,.4);
+    animation: pulso 2.4s ease-out 6s infinite;
+  }
+  @keyframes pulso { 0% { box-shadow: 0 0 0 0 rgba(239,226,204,.35); } 100% { box-shadow: 0 0 0 22px rgba(239,226,204,0); } }
+  .sonido {
+    position: fixed; z-index: 60; top: calc(env(safe-area-inset-top) + 14px); right: 14px;
+    width: 38px; height: 38px; border-radius: 50%;
+    border: 1px solid rgba(255,248,236,.45); background: rgba(60,40,25,.25);
+    color: #fbf3e6; display: grid; place-items: center; cursor: pointer;
+    -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    opacity: 0; transition: opacity 1s ease;
+  }
+  body.listo .sonido { opacity: .85; }
+  .sonido svg { width: 18px; height: 18px; }
+  .sonido .off { display: none; }
+  .sonido.mudo .on { display: none; }
+  .sonido.mudo .off { display: inline; }
 
   /* pétalos */
   #petalos { position: fixed; inset: 0; pointer-events: none; z-index: 50; overflow: hidden; }
@@ -486,6 +588,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     :root { --giro-tapa: .5s; --giro-hoja: .4s; }
+    .cinta-libro { animation: none; }
     .folio .pasar, .pista span { animation: none; }
   }
 </style>
@@ -669,11 +772,30 @@
   </defs>
 </svg>
 
+<canvas id="polvo" aria-hidden="true"></canvas>
+<div class="vineta" aria-hidden="true"></div>
+
+<div class="intro" id="intro" role="button" aria-label="Empezar">
+  <p class="intro-linea l1">Para <span data-texto="ella"></span></p>
+  <p class="intro-linea l2" data-texto="intro1"></p>
+  <p class="intro-linea l3" data-texto="intro2"></p>
+  <button class="intro-empezar" type="button"><i></i>toca para empezar</button>
+</div>
+
+<button class="sonido" id="sonido" type="button" aria-label="Activar o silenciar el sonido">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 9h3l5-4v14l-5-4H4z" fill="currentColor" stroke="none"/>
+    <path class="on" d="M16 8.5c1.2 1 1.8 2.2 1.8 3.5s-.6 2.5-1.8 3.5M18.6 6c1.9 1.6 2.9 3.6 2.9 6s-1 4.4-2.9 6"/>
+    <path class="off" d="M16.5 9.5l5 5M21.5 9.5l-5 5"/>
+  </svg>
+</button>
+
 <main class="escena">
   <div class="mesa">
   <div class="volumen" id="volumen">
   <div class="libro" id="libro" role="button" aria-label="Abrir el libro" tabindex="0">
     <div class="canto"></div>
+    <div class="cinta-libro" aria-hidden="true"></div>
 
     <!-- Página final: Capítulo 1 (queda debajo de todo) -->
     <div class="pagina-fija pag-capitulo">
@@ -758,8 +880,10 @@
     <div class="hoja tapa" data-i="0">
       <div class="cara frente tela">
         <div class="moteado"></div>
+        <div class="bisel"></div>
         <div class="lomo"></div>
         <svg class="adornos" viewBox="0 0 400 620" preserveAspectRatio="none" aria-hidden="true"><use href="#tapa-adornos"/></svg>
+        <div class="brillo"></div>
         <div class="portada">
           <h1 class="tinta-tapa" data-texto="tituloPortada"></h1>
           <svg class="onda" viewBox="0 0 120 16"><use href="#onda"/></svg>
@@ -783,6 +907,7 @@
     </div>
     <div class="lado canto-sup"></div>
     <div class="lado canto-inf"></div>
+    <div class="lado contratapa"></div>
     <div class="lado canto-der"></div>
   </div>
   </div>
@@ -807,6 +932,10 @@ const CONFIG = {
   pieDeFoto: "Harold & Mileidi",
   tituloFoto: "Una página que ya escribimos",
   notaFoto: "Y todavía quedan muchas por llenar.",
+
+  // Intro (pantalla oscura del principio)
+  intro1: "Hay historias que se leen…",
+  intro2: "y otras que se escriben juntos.",
 
   // Portada
   monograma: "H · M",
@@ -840,6 +969,7 @@ const CONFIG = {
 /* ================================================================= */
 
 (function () {
+  const reducido = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const $ = (s, r = document) => r.querySelector(s);
   const libro = $("#libro");
   const pista = $("#pista");
@@ -925,11 +1055,13 @@ const CONFIG = {
     const dur = h.classList.contains("tapa") ? ms("--giro-tapa") : ms("--giro-hoja");
     h.style.zIndex = 300;
     h.classList.add("girando");
+    sonPagina(h.classList.contains("tapa"));
     if (actual === 1 && dir > 0) {
       libro.classList.add("abierto");
-      document.getElementById("volumen").classList.add("abierto");
+      abrirCamara();
       libro.setAttribute("aria-label", "Pasar la página");
       pista.classList.add("oculta");
+      vibrar(12);
     }
     setTimeout(() => { h.classList.remove("girando"); ordenar(); ocupado = false; }, dur);
   }
@@ -968,6 +1100,177 @@ const CONFIG = {
     }
   });
 
+
+  /* =========================================================
+     AMBIENTE: intro, libro que se inclina, polvo de luz, sonido
+     ========================================================= */
+  const vol = $("#volumen"), mesa = $(".mesa");
+  const intro = $("#intro"), botonSonido = $("#sonido");
+  function vibrar(p) { try { navigator.vibrate && navigator.vibrate(p); } catch (e) {} }
+
+  // --- inclinación 3D (giroscopio o dedo) ---
+  const BASE_X = -7, BASE_Y = -18;
+  let objX = 0, objY = 0, curX = 0, curY = 0, vivo = true;
+  function bucle(t) {
+    if (!vivo) return;
+    curX += (objX - curX) * 0.06;
+    curY += (objY - curY) * 0.06;
+    const flota = reducido ? 0 : Math.sin(t / 1500) * 5;
+    const deriva = reducido ? 0 : Math.sin(t / 2300) * 1.5;
+    const ry = BASE_Y + curY + deriva, rx = BASE_X + curX;
+    vol.style.transform = `translateY(${flota}px) scale(.93) rotateX(${rx}deg) rotateY(${ry}deg)`;
+    vol.style.setProperty("--brillo", (62 - ry * 3) + "%");
+    mesa.style.setProperty("--sx", (-ry * 1.4).toFixed(1));
+    requestAnimationFrame(bucle);
+  }
+  requestAnimationFrame(bucle);
+  const lim = (v, a) => Math.max(-a, Math.min(a, v));
+  window.addEventListener("pointermove", e => {
+    if (e.pointerType === "touch" && e.buttons === 0) return;
+    objY = (e.clientX / innerWidth - 0.5) * 22;
+    objX = -(e.clientY / innerHeight - 0.5) * 14;
+  });
+  window.addEventListener("pointerup", e => { if (e.pointerType === "touch") { objX = 0; objY = 0; } });
+  function escucharGiro() {
+    window.addEventListener("deviceorientation", e => {
+      if (e.gamma == null) return;
+      objY = lim(e.gamma, 30) / 30 * 14;
+      objX = -lim(e.beta - 50, 30) / 30 * 9;
+    });
+  }
+  function abrirCamara() {
+    vivo = false;
+    vol.classList.add("abierto");
+    vol.style.transition = "transform 1.8s cubic-bezier(.45,.05,.25,1)";
+    vol.style.transform = "translateX(calc(var(--w) * .05))";
+    mesa.style.setProperty("--sx", 0);
+    document.body.classList.add("leyendo");
+  }
+
+  // --- polvo de luz flotando ---
+  (function polvo() {
+    const c = $("#polvo"), ctx = c.getContext("2d");
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    let W, H;
+    const tam = () => { W = c.width = innerWidth * dpr; H = c.height = innerHeight * dpr; };
+    tam(); window.addEventListener("resize", tam);
+    const punto = document.createElement("canvas"); punto.width = punto.height = 32;
+    const pc = punto.getContext("2d");
+    const g = pc.createRadialGradient(16, 16, 0, 16, 16, 16);
+    g.addColorStop(0, "rgba(255,244,220,1)"); g.addColorStop(.35, "rgba(255,236,200,.5)"); g.addColorStop(1, "rgba(255,236,200,0)");
+    pc.fillStyle = g; pc.fillRect(0, 0, 32, 32);
+    const motas = Array.from({ length: reducido ? 12 : 42 }, () => ({
+      x: Math.random(), y: Math.random(), r: 2 + Math.random() * 7, a: .15 + Math.random() * .45,
+      v: .00006 + Math.random() * .00018, f: Math.random() * 6.28, z: .3 + Math.random()
+    }));
+    function dibujar(t) {
+      ctx.clearRect(0, 0, W, H);
+      for (const m of motas) {
+        m.y -= m.v * (reducido ? 0 : 1); if (m.y < -0.05) { m.y = 1.05; m.x = Math.random(); }
+        const x = (m.x + Math.sin(t / 3000 + m.f) * .015 + curY * .0015 * m.z) * W;
+        const y = (m.y - curX * .0015 * m.z) * H;
+        ctx.globalAlpha = m.a * (.6 + .4 * Math.sin(t / 900 + m.f));
+        const d = m.r * dpr * 2;
+        ctx.drawImage(punto, x - d / 2, y - d / 2, d, d);
+      }
+      requestAnimationFrame(dibujar);
+    }
+    requestAnimationFrame(dibujar);
+  })();
+
+  // --- sonido: pasar página, campanitas y cajita de música ---
+  let ac = null, maestro = null, sonidoOn = true, ruidoBuf = null;
+  function iniciarAudio() {
+    try {
+      ac = new (window.AudioContext || window.webkitAudioContext)();
+      maestro = ac.createGain(); maestro.gain.value = 1; maestro.connect(ac.destination);
+      ruidoBuf = ac.createBuffer(1, ac.sampleRate * 1.2, ac.sampleRate);
+      const d = ruidoBuf.getChannelData(0);
+      for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+      musica();
+    } catch (e) { ac = null; }
+  }
+  function sonPagina(tapa) {
+    if (!ac) return;
+    const t = ac.currentTime + (tapa ? 0.15 : 0);
+    const src = ac.createBufferSource(); src.buffer = ruidoBuf;
+    const bp = ac.createBiquadFilter(); bp.type = "bandpass"; bp.Q.value = .9;
+    bp.frequency.setValueAtTime(tapa ? 1800 : 3200, t);
+    bp.frequency.exponentialRampToValueAtTime(600, t + (tapa ? .9 : .45));
+    const g = ac.createGain();
+    g.gain.setValueAtTime(0, t);
+    g.gain.linearRampToValueAtTime(tapa ? .32 : .2, t + .06);
+    g.gain.exponentialRampToValueAtTime(.001, t + (tapa ? 1 : .5));
+    src.connect(bp); bp.connect(g); g.connect(maestro);
+    src.start(t); src.stop(t + 1.1);
+    if (tapa) { // la tapa se apoya
+      const o = ac.createOscillator(), og = ac.createGain();
+      o.frequency.setValueAtTime(110, t + 1.25); o.frequency.exponentialRampToValueAtTime(45, t + 1.5);
+      og.gain.setValueAtTime(0, t + 1.25); og.gain.linearRampToValueAtTime(.25, t + 1.27); og.gain.exponentialRampToValueAtTime(.001, t + 1.6);
+      o.connect(og); og.connect(maestro); o.start(t + 1.2); o.stop(t + 1.7);
+    }
+  }
+  function campana(f, t, vol, dur) {
+    const o = ac.createOscillator(), o2 = ac.createOscillator(), g = ac.createGain();
+    o.frequency.value = f; o2.frequency.value = f * 2.01; o2.type = "sine";
+    const g2 = ac.createGain(); g2.gain.value = .25;
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + .008);
+    g.gain.exponentialRampToValueAtTime(.0008, t + dur);
+    o.connect(g); o2.connect(g2); g2.connect(g); g.connect(eco || maestro);
+    o.start(t); o2.start(t); o.stop(t + dur + .05); o2.stop(t + dur + .05);
+  }
+  let eco = null;
+  function musica() {
+    // eco suave
+    const d = ac.createDelay(); d.delayTime.value = .38;
+    const fb = ac.createGain(); fb.gain.value = .32;
+    const lp = ac.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 2600;
+    eco = ac.createGain(); eco.gain.value = .9;
+    eco.connect(maestro); eco.connect(d); d.connect(lp); lp.connect(fb); fb.connect(d); lp.connect(maestro);
+    const m = n => 440 * Math.pow(2, (n - 69) / 12);
+    const acordes = [[74, 78, 81, 86], [69, 73, 76, 81], [71, 74, 78, 83], [67, 71, 74, 79]]; // Re, La, Si m, Sol
+    const patron = [0, 2, 1, 3, 2, 1, 0, 2];
+    const paso = .46;
+    let siguiente = ac.currentTime + .3, i = 0;
+    setInterval(() => {
+      if (!ac) return;
+      while (siguiente < ac.currentTime + .6) {
+        const compas = Math.floor(i / 8) % 4, nota = patron[i % 8];
+        const ac_ = acordes[compas];
+        if (i % 8 === 0) campana(m(ac_[0] - 24), siguiente, .05, 3.2);
+        if (Math.random() > .12) campana(m(ac_[nota]), siguiente, .045 + Math.random() * .02, 1.8);
+        siguiente += paso; i++;
+      }
+    }, 120);
+  }
+  function sonCampanas() {
+    if (!ac) return;
+    const t = ac.currentTime;
+    [88, 93, 95, 100, 105].forEach((n, k) => campana(440 * Math.pow(2, (n - 69) / 12), t + k * .11, .09, 2.4));
+  }
+  botonSonido.addEventListener("click", e => {
+    e.stopPropagation();
+    sonidoOn = !sonidoOn;
+    botonSonido.classList.toggle("mudo", !sonidoOn);
+    if (ac) maestro.gain.setTargetAtTime(sonidoOn ? 1 : 0, ac.currentTime, .15);
+  });
+
+  // --- intro ---
+  let empezado = false;
+  function empezar() {
+    if (empezado) return;
+    empezado = true;
+    iniciarAudio();
+    try {
+      if (window.DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission === "function") {
+        DeviceOrientationEvent.requestPermission().then(p => { if (p === "granted") escucharGiro(); }).catch(() => {});
+      } else escucharGiro();
+    } catch (e) {}
+    intro.classList.add("fuera");
+    document.body.classList.add("listo");
+  }
+  intro.addEventListener("click", empezar);
+
   /* ---- "Sí, quiero" ---- */
   $("#boton-si").addEventListener("click", e => {
     e.stopPropagation();
@@ -980,6 +1283,8 @@ const CONFIG = {
     e.currentTarget.classList.add("dicho");
     iniciarContador();
     lluviaDePetalos();
+    sonCampanas();
+    vibrar([30, 60, 30, 60, 80]);
     setTimeout(() => pasar(1), 1300);
   });
 
@@ -1011,7 +1316,6 @@ const CONFIG = {
     ["#f6c3cb", "#de7f93", "#b9566d"]
   ];
   const capa = $("#petalos");
-  const reducido = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function petalo() {
     const p = document.createElement("div");
@@ -1040,7 +1344,7 @@ const CONFIG = {
   }
 
   function lluviaDePetalos() {
-    const n = reducido ? 18 : 70;
+    const n = reducido ? 18 : 110;
     for (let i = 0; i < n; i++) setTimeout(petalo, i * 55 + Math.random() * 300);
   }
 })();
