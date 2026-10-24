@@ -268,15 +268,6 @@
     position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
     box-shadow: inset 2px 2px 2px rgba(255,255,255,.28), inset -3px -3px 4px rgba(25,50,80,.35);
   }
-  .cinta-libro {
-    position: absolute; left: 22%; bottom: -9%; width: 5.5%; height: 16%;
-    transform-origin: 50% 0;
-    background: linear-gradient(90deg, #8e2433, #c4505c 40%, #dc7d86 50%, #b23f4c 65%, #7d1f2c);
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 88%, 0 100%);
-    animation: mecer 5s ease-in-out infinite;
-    z-index: 1;
-  }
-  @keyframes mecer { 0%,100% { transform: rotate(1.5deg); } 50% { transform: rotate(-2deg); } }
   .oro {
     background: linear-gradient(100deg, #94672a 0%, #e5c477 20%, #fff0c4 30%, #c8973f 46%, #8d6424 60%, #e0bd6c 80%, #a47732 100%);
     -webkit-background-clip: text; background-clip: text;
@@ -641,7 +632,6 @@
   @media (prefers-reduced-motion: reduce) {
     .verso, .ilustra .trazo, .ilustra .aparece { transition-duration: .01s; transition-delay: 0s; }
     :root { --giro-tapa: .5s; --giro-hoja: .4s; }
-    .cinta-libro { animation: none; }
     .folio .pasar, .pista span { animation: none; }
   }
 </style>
@@ -877,7 +867,6 @@
   <div class="volumen" id="volumen">
   <div class="libro" id="libro" role="button" aria-label="Abrir el libro" tabindex="0">
     <div class="canto"></div>
-    <div class="cinta-libro" aria-hidden="true"></div>
 
     <!-- Página final: Capítulo 1 (queda debajo de todo) -->
     <div class="pagina-fija pag-capitulo">
