@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#e6d9c7">
+<meta name="theme-color" content="#c9d9e8">
 <title>Para Mileidi</title>
 <!--
   ============================================================
@@ -21,9 +21,10 @@
     --azul-hondo: #7e9fbc;
     --papel: #f8f0e1;
     --papel-sombra: #eadcc3;
-    --tinta: #4b3a2e;
-    --tinta-suave: #8a7260;
-    --cobre: #a8673f;
+    --tinta: #2c3644;
+    --tinta-suave: #6b7a8c;
+    --cobre: #3f5f82;   /* acento de títulos y firmas: azul tinta */
+    --acento: #7f9bbb;  /* adornos e ilustraciones: azul medio */
     --oro-1: #9d7029;
     --oro-2: #e9cb7c;
     --oro-3: #fff0c2;
@@ -47,7 +48,7 @@
   html, body { height: 100%; }
   body {
     background:
-      radial-gradient(85% 60% at 50% 44%, #f4ead9 0%, #e2d1b7 38%, #a88e72 78%, #6d5643 100%);
+      radial-gradient(85% 60% at 50% 44%, #eef3f8 0%, #d6e2ed 38%, #b1c6da 76%, #93abc3 100%);
     color: var(--tinta);
     font-family: var(--serif-texto);
     overflow: hidden;
@@ -69,7 +70,7 @@
   #polvo { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
   .vineta {
     position: fixed; inset: 0; pointer-events: none; z-index: 1;
-    background: radial-gradient(75% 55% at 50% 46%, transparent 40%, rgba(45,30,18,.45) 100%);
+    background: radial-gradient(75% 55% at 50% 46%, transparent 40%, rgba(45,70,100,.32) 100%);
     transition: opacity 2s ease; opacity: .7;
   }
   body.leyendo .vineta { opacity: 1; }
@@ -94,7 +95,7 @@
   /* sombra que proyecta el libro sobre la mesa */
   .mesa::before {
     content: ""; position: absolute; left: 6%; right: -4%; top: 6%; bottom: -3%;
-    background: rgba(45,28,14,.55); border-radius: 6px;
+    background: rgba(35,55,85,.42); border-radius: 6px;
     filter: blur(22px);
     transform: translate(calc(var(--sx, 0) * 1px + 14px), 20px);
     transition: opacity 1.5s ease;
@@ -171,7 +172,7 @@
   /* sombra de contacto sobre la mesa */
   .libro::before {
     content: ""; position: absolute; left: 4%; right: -2%; bottom: -5%; height: 10%;
-    background: radial-gradient(50% 50% at 50% 50%, rgba(70,45,20,.32), transparent 70%);
+    background: radial-gradient(50% 50% at 50% 50%, rgba(35,55,85,.3), transparent 70%);
     filter: blur(6px); z-index: -2;
   }
 
@@ -270,7 +271,7 @@
   .cinta-libro {
     position: absolute; left: 22%; bottom: -9%; width: 5.5%; height: 16%;
     transform-origin: 50% 0;
-    background: linear-gradient(90deg, #7f1320, #c43a46 40%, #e0727a 50%, #b02a37 65%, #6e0f1b);
+    background: linear-gradient(90deg, #8e2433, #c4505c 40%, #dc7d86 50%, #b23f4c 65%, #7d1f2c);
     clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 88%, 0 100%);
     animation: mecer 5s ease-in-out infinite;
     z-index: 1;
@@ -330,7 +331,7 @@
     position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
     width: 58%; padding: 8% 6%;
     background: var(--papel); text-align: center;
-    border: 1px solid rgba(157,112,41,.5); outline: 1px solid rgba(157,112,41,.25); outline-offset: -5px;
+    border: 1px solid rgba(63,95,130,.45); outline: 1px solid rgba(63,95,130,.2); outline-offset: -5px;
     font-family: var(--serif-titulo); font-style: italic; color: var(--tinta-suave);
     font-size: calc(var(--w) * .04); line-height: 1.5;
   }
@@ -354,7 +355,7 @@
     font-family: var(--serif-titulo); text-transform: uppercase; letter-spacing: .3em;
     font-size: .62em; color: var(--tinta-suave); text-align: center;
   }
-  .onda { display: block; width: 26%; height: auto; margin: .5em auto 1em; color: var(--oro-1); opacity: .75; }
+  .onda { display: block; width: 26%; height: auto; margin: .5em auto 1em; color: var(--acento); opacity: .85; }
   .saludo { font-style: italic; color: var(--cobre); font-size: 1.06em; }
   .carta p:not(.saludo) { font-size: .96em; }
   .firma {
@@ -488,7 +489,7 @@
     font-style: italic; color: var(--tinta-suave); font-size: .9em; line-height: 1.55;
     max-width: 92%;
   }
-  .epigrafe::before, .epigrafe::after { color: var(--oro-1); }
+  .epigrafe::before, .epigrafe::after { color: var(--acento); }
   .pregunta-nombre {
     font-family: var(--serif-titulo); font-style: italic; font-size: 1.5em;
     color: var(--tinta); margin-top: .6em;
@@ -513,7 +514,7 @@
     box-shadow:
       inset 0 0 0 1px rgba(60,90,120,.3),
       inset 0 0 0 4px #93b3cf,
-      inset 0 0 0 5px rgba(201,160,80,.8),
+      inset 0 0 0 5px rgba(255,255,255,.55),
       0 1px 0 rgba(255,255,255,.6),
       0 3px 6px -2px rgba(60,40,20,.35);
     transition: transform .2s ease, box-shadow .2s ease;
@@ -539,7 +540,7 @@
   .contador {
     display: grid; grid-template-columns: repeat(4, 1fr); width: 100%;
     margin-top: .6em; padding: .9em 0 .8em;
-    border-top: 1px solid rgba(157,112,41,.35); border-bottom: 1px solid rgba(157,112,41,.35);
+    border-top: 1px solid rgba(63,95,130,.3); border-bottom: 1px solid rgba(63,95,130,.3);
   }
   .contador div { display: flex; flex-direction: column; align-items: center; }
   .contador strong {
@@ -555,8 +556,8 @@
 
   /* pista inicial */
   .pista {
-    font-family: var(--serif-titulo); font-style: italic; color: #f6ecdc;
-    text-shadow: 0 1px 6px rgba(40,25,10,.6);
+    font-family: var(--serif-titulo); font-style: italic; color: #2a3c52;
+    text-shadow: 0 1px 0 rgba(255,255,255,.55);
     font-size: 15px; letter-spacing: .02em;
     opacity: 0;
     transition: opacity .6s ease;
@@ -618,8 +619,8 @@
   .sonido {
     position: fixed; z-index: 60; top: calc(env(safe-area-inset-top) + 14px); right: 14px;
     width: 38px; height: 38px; border-radius: 50%;
-    border: 1px solid rgba(255,248,236,.45); background: rgba(60,40,25,.25);
-    color: #fbf3e6; display: grid; place-items: center; cursor: pointer;
+    border: 1px solid rgba(42,60,82,.3); background: rgba(255,255,255,.35);
+    color: #2a3c52; display: grid; place-items: center; cursor: pointer;
     -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
     opacity: 0; transition: opacity 1s ease;
   }
@@ -944,12 +945,12 @@
         <div class="contenido poema" id="poema-3">
           <div class="versos"></div>
           <svg class="ilustra" viewBox="0 0 200 125" aria-hidden="true">
-            <g fill="none" stroke="#b08a45" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <g fill="none" stroke="#7f9bbb" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
               <path class="trazo" pathLength="1" d="M118 14 A30 30 0 1 0 142 64 A23 23 0 0 1 118 14 Z"/>
               <path class="trazo" pathLength="1" d="M62 104 C80 118 120 118 138 104"/>
               <path class="trazo" pathLength="1" d="M70 110 l-5 7 M82 114 l-3 8 M94 116 l-1 8 M106 116 l1 8 M118 114 l3 8 M130 110 l5 7"/>
             </g>
-            <g fill="#c9a253" class="aparece">
+            <g fill="#9fb6cf" class="aparece">
               <path class="estrella" d="M52 26 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2z"/>
               <path class="estrella" style="animation-delay:.8s" d="M168 30 l1.5 4 4 1.5 -4 1.5 -1.5 4 -1.5 -4 -4 -1.5 4 -1.5z"/>
               <path class="estrella" style="animation-delay:1.6s" d="M158 80 l1.2 3 3 1.2 -3 1.2 -1.2 3 -1.2 -3 -3 -1.2 3 -1.2z"/>
@@ -973,13 +974,13 @@
           <svg class="onda" viewBox="0 0 120 16"><use href="#onda"/></svg>
           <div class="versos"></div>
           <svg class="ilustra" viewBox="0 0 220 90" aria-hidden="true">
-            <g fill="none" stroke="#b08a45" stroke-width="1.7" stroke-linecap="round">
+            <g fill="none" stroke="#7f9bbb" stroke-width="1.7" stroke-linecap="round">
               <path class="trazo" pathLength="1" d="M12 62 C48 8 80 82 110 45 C128 24 148 30 166 45"/>
               <path class="trazo" pathLength="1" d="M12 28 C48 82 80 8 110 45 C128 66 148 60 166 45"/>
               <path class="trazo" pathLength="1" d="M166 45 C172 45 176 45 181 45"/>
             </g>
             <g class="aparece">
-              <circle cx="12" cy="62" r="2.4" fill="#c9a253"/><circle cx="12" cy="28" r="2.4" fill="#c9a253"/>
+              <circle cx="12" cy="62" r="2.4" fill="#9fb6cf"/><circle cx="12" cy="28" r="2.4" fill="#9fb6cf"/>
               <use href="#rosa" transform="translate(194,45) scale(.24)"/>
             </g>
           </svg>
@@ -1000,13 +1001,13 @@
             <span class="verso" style="--i:1" data-texto="explicacion2"></span>
           </div>
           <svg class="ilustra" viewBox="0 0 200 120" aria-hidden="true">
-            <g fill="none" stroke="#b08a45" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <g fill="none" stroke="#7f9bbb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
               <path class="trazo" pathLength="1" d="M152 12 C118 16 86 46 66 86 C96 72 132 48 152 12 Z"/>
               <path class="trazo" pathLength="1" d="M140 24 L130 36 M130 32 L116 48 M118 42 L102 60 M106 54 L90 72"/>
               <path class="trazo" pathLength="1" d="M152 12 L56 100"/>
             </g>
-            <path class="trazo tinta" pathLength="1" d="M56 100 C72 108 86 96 100 102 C116 108 128 98 150 104" fill="none" stroke="#4b3a2e" stroke-width="1.6" stroke-linecap="round"/>
-            <circle class="aparece" cx="156" cy="104" r="2.2" fill="#4b3a2e"/>
+            <path class="trazo tinta" pathLength="1" d="M56 100 C72 108 86 96 100 102 C116 108 128 98 150 104" fill="none" stroke="#2c3e55" stroke-width="1.6" stroke-linecap="round"/>
+            <circle class="aparece" cx="156" cy="104" r="2.2" fill="#2c3e55"/>
           </svg>
         </div>
         <div class="folio">— 1 —<span class="pasar">pasa la página ›</span></div>
